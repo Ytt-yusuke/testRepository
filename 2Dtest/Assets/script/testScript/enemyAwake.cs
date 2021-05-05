@@ -22,10 +22,10 @@ public class enemyAwake : MonoBehaviour
         {
             bossObj[0].SetActive(true);
         }
-
-        if(Input.GetKey(KeyCode.Alpha1) && Input.GetKey(KeyCode.Return))
+        else if(Input.GetKey(KeyCode.Alpha1) && Input.GetKey(KeyCode.Return))
         {
-            enemySpawnPoint[0].SetActive(true);
+            for(int i = 0; i < enemySpawnPoint.Length; i++)
+            enemySpawnPoint[i].SetActive(true);
         }
     }
 }

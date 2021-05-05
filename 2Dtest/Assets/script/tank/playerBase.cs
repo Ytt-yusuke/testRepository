@@ -11,6 +11,10 @@ public class playerBase : MonoBehaviour
     public float limitSet = 5f;
     public float[] power = new float[2];
     public bool keyMode;
+    public bool bossDefeatFlag;
+
+    public int defeats;
+    public int defeatsLimit;
 
     public GameObject[] playerTank = new GameObject[2];
 
@@ -27,6 +31,7 @@ public class playerBase : MonoBehaviour
         joycons = JoyconManager.Instance.j;
         joyconL = joycons.Find(c => c.isLeft); // Joy-Con (L)
         joyconR = joycons.Find(c => !c.isLeft); // Joy-Con (R)
+        bossDefeatFlag = false;
     }
 
     // Update is called once per frame

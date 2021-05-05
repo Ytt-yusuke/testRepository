@@ -26,6 +26,8 @@ public class enemyBase : MonoBehaviour
 
     private float calcTime;
 
+    private bool nomEnemy;
+
     void Start()
     {
         playerBaseObj = GameObject.Find("playerBaseObj");
@@ -33,10 +35,12 @@ public class enemyBase : MonoBehaviour
         calcTime = 0;
         baseScale = transform.localScale;
         enemyDirect = baseScale;
+        nomEnemy = true;
 
         if(enemyNum == 101)
         {
             BS = gameObject.GetComponent<bossScript>();
+            nomEnemy = false;
         }
     }
 
@@ -86,9 +90,14 @@ public class enemyBase : MonoBehaviour
             }
         }
 
-        if(HP <= 0)
+        if(HP <= 0 && nomEnemy == true)
         {
             Destroy(gameObject);
+            PB.defeats++;
+        }
+        else if(HP <= 0 && nomEnemy == false)
+        {
+            PB.bossDefeatFlag = true;
         }
 
         transform.localScale = enemyDirect;
@@ -107,13 +116,6 @@ public class enemyBase : MonoBehaviour
         else if(collision.gameObject.layer == 12)
         {
             HP--;
-        }
-        else if(collision.gameObject.layer == 8)
-        {
-            if (gameObject.layer == 11)
-            {
-                HP = 0;
-            }
         }
     }
 

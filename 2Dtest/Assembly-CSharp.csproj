@@ -72,6 +72,7 @@
     <Compile Include="Assets\script\tank\cameraScript.cs" />
     <Compile Include="Assets\script\tank\destroyBullet.cs" />
     <Compile Include="Assets\script\tank\destroyEnemyBullet.cs" />
+    <Compile Include="Assets\script\tank\endGameScript.cs" />
     <Compile Include="Assets\script\tank\enemyBase.cs" />
     <Compile Include="Assets\script\tank\enemySpawn.cs" />
     <Compile Include="Assets\script\tank\playerAnimScript.cs" />

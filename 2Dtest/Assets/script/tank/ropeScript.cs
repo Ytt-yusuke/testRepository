@@ -11,6 +11,9 @@ public class ropeScript : MonoBehaviour
     [SerializeField]
     private GameObject playerBaseObj;
 
+    [SerializeField]
+    private SpriteRenderer rope;
+
     private playerBase PB;
 
     void Start()
@@ -23,5 +26,16 @@ public class ropeScript : MonoBehaviour
     {
         ropeBase[0].transform.position = PB.playerTank[0].transform.position;
         ropeBase[1].transform.position = PB.playerTank[1].transform.position;
+
+        if(PB.ropeAttackFlag)
+        {
+            gameObject.SetLayerRecursively(14);
+            rope.color = Color.red;
+        }
+        else
+        {
+            gameObject.SetLayerRecursively(10);
+            rope.color = Color.white;
+        }
     }
 }

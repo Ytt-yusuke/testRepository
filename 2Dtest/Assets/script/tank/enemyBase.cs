@@ -8,6 +8,7 @@ public class enemyBase : MonoBehaviour
     public float HP;
 
     public int enemyNum;
+    public int energy;
 
     public float enemySpeed;
 
@@ -25,6 +26,7 @@ public class enemyBase : MonoBehaviour
     private Vector3 baseScale;
 
     private float calcTime;
+    private float hitCount;
 
     private bool nomEnemy;
 
@@ -36,6 +38,11 @@ public class enemyBase : MonoBehaviour
         baseScale = transform.localScale;
         enemyDirect = baseScale;
         nomEnemy = true;
+
+        if(enemyNum == 1)
+        {
+            energy = 1;
+        }
 
         if(enemyNum == 101)
         {
@@ -83,7 +90,7 @@ public class enemyBase : MonoBehaviour
             
             calcTime += Time.deltaTime;
 
-            if(calcTime >= 1)
+            if (calcTime >= 1)
             {
                 BS.Shoot();
                 calcTime = 0;
@@ -106,7 +113,7 @@ public class enemyBase : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == 9)
+        if(collision.gameObject.layer == 14)
         {
             if (gameObject.layer == 11)
             {
@@ -116,6 +123,37 @@ public class enemyBase : MonoBehaviour
         else if(collision.gameObject.layer == 12)
         {
             HP--;
+
+            if(HP == 0)
+            {
+                GameObject newenergy = Instantiate(PB.energyObj, transform.position, Quaternion.identity) as GameObject;
+                newenergy.GetComponent<enegyMove>().targetNum = collision.gameObject.GetComponent<playerBullet>().playerNum;
+            }
+        }
+        else if(collision.gameObject.layer == 8)
+        {
+            if (nomEnemy == true)
+            {
+                Destroy(gameObject);
+                PB.HP--;
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 8)
+        {
+            if (nomEnemy == false)
+            {
+                hitCount += Time.deltaTime;
+
+                if (hitCount >= 1)
+                {
+                    PB.HP--;
+                    hitCount = 0;
+                }
+            }
         }
     }
 

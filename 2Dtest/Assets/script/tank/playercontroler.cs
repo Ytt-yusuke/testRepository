@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class playercontroler : MonoBehaviour
 {
     // Start is called before the first frame update
+    public int playerNum;
 
     private float speed;
     private float power;
@@ -23,6 +25,15 @@ public class playercontroler : MonoBehaviour
 
     [SerializeField]
     GameObject shotPoint;
+
+    [SerializeField]
+    private GameObject energyInstance;
+
+    [SerializeField]
+    private Slider energySlider;
+
+    [SerializeField]
+    private SpriteRenderer player;
 
     public bool shootMode;
     public bool shootFlag;
@@ -45,6 +56,8 @@ public class playercontroler : MonoBehaviour
         scale = 1;
         baseScale = transform.localScale;
         playerDirect = baseScale;
+
+        energySlider.value = 0;
 
         PB = playerBaseObj.GetComponent<playerBase>();
         PA = playerBaseObj.GetComponent<playerAnimScript>();
@@ -80,6 +93,17 @@ public class playercontroler : MonoBehaviour
             stickL = PB.joyconL.GetStick();
         }
 
+        if(PB.ropeAttackFlag == true)
+        {
+            player.color = Color.red;
+            gameObject.layer = 14;
+        }
+        else
+        {
+            player.color = Color.white;
+            gameObject.layer = 8;
+        }
+
         if (this.gameObject == PB.playerTank[0])
         {
             power = PB.power[0];
@@ -103,8 +127,6 @@ public class playercontroler : MonoBehaviour
                 {
                     PB.playerTank[0].transform.position = Vector3.Lerp(PB.playerTank[0].transform.position, PB.playerTank[1].transform.position, PB.attractSpeed * Time.deltaTime);
                 }
-
-                Debug.Log(PB.attractSpeed * Time.deltaTime);
             }
 
             if (Input.GetKey(KeyCode.M) && this.gameObject == PB.playerTank[0] || Input.GetKey(KeyCode.X) && this.gameObject == PB.playerTank[1])
@@ -194,6 +216,16 @@ public class playercontroler : MonoBehaviour
             }
             else
             {
+                if (Input.GetKey(KeyCode.R) && Input.GetKey(KeyCode.T))
+                {
+                    if(PB.energy[0] >= 10 && PB.energy[1] >= 10 && PB.ropeAttackFlag == false)
+                    {
+                        PB.ropeAttackFlag = true;
+                        PB.energy[0] -= 10;
+                        PB.energy[1] -= 10;
+                    }
+                }
+
                 if (Input.GetKey(KeyCode.LeftArrow) && this.gameObject == PB.playerTank[0] || Input.GetKey(KeyCode.A) && this.gameObject == PB.playerTank[1])
                 {
                     if (this.gameObject == PB.playerTank[0])
@@ -384,12 +416,23 @@ public class playercontroler : MonoBehaviour
         PB.playerTank[1].transform.Translate(controlVector[1] * speed * Time.deltaTime);
 
         transform.localScale = playerDirect * scale;
+
+        energySlider.value = PB.energy[playerNum] / PB.maxEnergy[playerNum];
     }
 
     void Shoot(int num)
     {
         GameObject newBullet = Instantiate(bullet, cannonPoint.position, Quaternion.identity) as GameObject;
         newBullet.GetComponent<Rigidbody2D>().AddForce((shotPoint.transform.position - PB.playerTank[num].transform.position).normalized * power);
+
+        if (this.gameObject == PB.playerTank[0])
+        {
+            newBullet.GetComponent<playerBullet>().playerNum = 0;
+        }
+        else if (this.gameObject == PB.playerTank[1])
+        {
+            newBullet.GetComponent<playerBullet>().playerNum = 1;
+        }
     }
 
     void setDirect(int num)
@@ -404,6 +447,14 @@ public class playercontroler : MonoBehaviour
         {
             directVector = new Vector3(-1, 1, 1);
             playerDirect = new Vector3(baseScale.x * directVector.x, baseScale.y * directVector.y, baseScale.z * directVector.z);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == 15)
+        {
+            PB.HP--;
         }
     }
 }

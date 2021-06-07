@@ -9,6 +9,8 @@ public class cameraScript : MonoBehaviour
 
     private Vector3 basePos;
 
+    private float cameraYpos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,15 @@ public class cameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(playerObj.transform.position.x, Mathf.Lerp(playerObj.transform.position.y, basePos.y, 0.8f), basePos.z);
+        if(playerObj.transform.position.y > basePos.y)
+        {
+            cameraYpos = playerObj.transform.position.y;
+        }
+        else
+        {
+            cameraYpos = basePos.y;
+        }
+
+        transform.position = new Vector3(playerObj.transform.position.x, cameraYpos, basePos.z);
     }
 }

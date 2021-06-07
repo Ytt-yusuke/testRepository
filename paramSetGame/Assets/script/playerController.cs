@@ -10,6 +10,9 @@ public class playerController : MonoBehaviour
 
     private bool jumpFlag;
 
+    private float jumpPower = 300;
+    private float damageTimer = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +27,17 @@ public class playerController : MonoBehaviour
         moveDist = Vector2.zero;
         jumpFlag = IsCollision();
 
+        if (damageTimer > 0)
+        {
+            damageTimer -= Time.deltaTime;
+        }
+        else
+        {
+            damageTimer = 0;
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            Physics2D.IgnoreLayerCollision(8, 11, false);
+        }
+
         if (PB.hackFlag == false)
         { 
             if (Input.GetKey(KeyCode.RightArrow))
@@ -36,14 +50,15 @@ public class playerController : MonoBehaviour
                 moveDist += new Vector2(-1, 0);
             }
 
-            if(Input.GetKeyDown(KeyCode.Space) && jumpFlag == true)
+            if(Input.GetKeyDown(KeyCode.LeftShift) && jumpFlag == true)
             {
-                RB2.AddForce(Vector2.up * PB.powerNum);
+                RB2.AddForce(Vector2.up * jumpPower);
+                jumpFlag = false;
             }
         }
         else
         {
-            if (Input.GetMouseButtonDown(0)) //マウスがクリックされたら
+            if (Input.GetKeyDown(KeyCode.Space) && PB.controlCount > 0) //マウスがクリックされたら
             {
                 var mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 var hit = Physics2D.Raycast(mousePoint, Vector2.zero);
@@ -53,7 +68,7 @@ public class playerController : MonoBehaviour
                     var hitObj = hit.collider.gameObject;
                     Debug.Log(hitObj);
 
-                    if (hitObj.CompareTag("select"))
+                    if (hitObj.layer == 8 || hitObj.layer == 9 || hitObj.layer == 10)
                     {
                         var UI = hitObj.transform.Find("UI");
                         UI.gameObject.SetActive(true);
@@ -81,15 +96,14 @@ public class playerController : MonoBehaviour
 
         }
 
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            transform.position = new Vector3(0, 0, 0);
+        }
+
         moveDist.Normalize();
 
         transform.Translate(moveDist * PB.speedNum * Time.deltaTime);
-    }
-
-    void Jump()
-    {
-        RB2.AddForce(Vector2.up * PB.powerNum);
-        jumpFlag = false;
     }
 
     bool IsCollision()
@@ -101,5 +115,19 @@ public class playerController : MonoBehaviour
         //Debug.DrawLine(right_SP, EP);
         return Physics2D.Linecast(left_SP, EP, PB.GroundLayer)
                || Physics2D.Linecast(right_SP, EP, PB.GroundLayer);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Enemy") && collision.gameObject.GetComponent<enemyBase>().HPNum > 0)
+        {
+            if(damageTimer == 0)
+            {
+                PB.HPNum--;
+                damageTimer = 2;
+                gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                Physics2D.IgnoreLayerCollision(8, 11);
+            }
+        }
     }
 }

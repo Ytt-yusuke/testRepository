@@ -2,26 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class enemyBase : MonoBehaviour
 {
     public Slider speed;
-    public Slider power;
 
     public float speedNum;
-    public float powerNum;
+    public float tribeNum;
+    public float damageTime;
+
+    public float HPNum;
+
+    public int enemyNum;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        damageTime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         speedNum = speed.value;
-        powerNum = power.value;
+        tribeNum = 0;
+        damageTime += Time.deltaTime;
+    }
+
+    public void EnemySet(int num)
+    {
+        gameObject.layer = 11;
+
+        if(num == 1)
+        {
+            HPNum = 2;
+        }
     }
 }

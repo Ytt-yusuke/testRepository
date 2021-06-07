@@ -6,10 +6,16 @@ using UnityEngine.UI;
 public class playerBase : MonoBehaviour
 {
     public Slider speed;
-    public Slider power;
+    public Slider gravity;
+    public Slider HP;
 
     public float speedNum;
     public float powerNum;
+    public float HPNum;
+    private float baseGravity;
+
+    public float groundDamageTime;
+    public int controlCount;
 
     public bool hackFlag;
     public bool UIFlag;
@@ -22,12 +28,36 @@ public class playerBase : MonoBehaviour
     {
         hackFlag = false;
         UIFlag = false;
+        HPNum = HP.value;
+        groundDamageTime = 0;
+        baseGravity = Physics2D.gravity.y;
+        controlCount = 3;
     }
 
     // Update is called once per frame
     void Update()
     {
         speedNum = speed.value;
-        powerNum = power.value;
+        HP.value = HPNum;
+        groundDamageTime += Time.deltaTime;
+
+        switch (gravity.value)
+        {
+            case -2:
+                Physics2D.gravity = new Vector2(0, baseGravity * 0.01f);
+                break;
+            case -1:
+                Physics2D.gravity = new Vector2(0, baseGravity * 0.5f);
+                break;
+            case 0:
+                Physics2D.gravity = new Vector2(0, baseGravity);
+                break;
+            case 1:
+                Physics2D.gravity = new Vector2(0, baseGravity * 1.5f);
+                break;
+            case 2:
+                Physics2D.gravity = new Vector2(0, baseGravity * 2);
+                break;
+        }
     }
 }

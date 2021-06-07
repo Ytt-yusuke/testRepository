@@ -22,5 +22,6 @@ public class UIset : MonoBehaviour
         var playerObj = GameObject.Find("Player");
         var PB = playerObj.GetComponent<playerBase>();
         PB.UIFlag = false;
+        PB.controlCount--;
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 public class testenemy : MonoBehaviour
 {
     private enemyBase EB;
-    private int cameraNum;
 
     private bool renderObj;
     private bool firstRenderObj;
@@ -14,22 +13,45 @@ public class testenemy : MonoBehaviour
     void Start()
     {
         EB = GetComponent<enemyBase>();
+        EB.enemyNum = 1;
+        EB.EnemySet(EB.enemyNum);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(renderObj == false && firstRenderObj == true)
+        if (EB.HPNum <= 0)
         {
-            Destroy(gameObject);
+            if(EB.tribeNum == 0)
+            {
+                gameObject.layer = 9;
+            }
+            else if(EB.tribeNum == 1)
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 122, 0, 255);
+            }
         }
-        else if(transform.position.y < -20)
+        else
         {
-            Destroy(gameObject);
+         
+            if (renderObj == false && firstRenderObj == true)
+            {           
+                Destroy(gameObject);       
+            }    
+            else if(transform.position.y < -20)      
+            {     
+                Destroy(gameObject);
+            }
+            if (EB.tribeNum == 0)
+            {
+                transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
+            }
+            else if (EB.tribeNum == 1)
+            {
+                transform.Translate(Vector2.right * EB.speedNum * Time.deltaTime);
+            }
         }
 
-        transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
-        cameraNum = 0;
         renderObj = false;
     }
 
@@ -41,5 +63,13 @@ public class testenemy : MonoBehaviour
             firstRenderObj = true;
         }
             
+    }
+
+    public void DestroyObj()
+    {
+        var playerObj = GameObject.Find("Player");
+        var PB = playerObj.GetComponent<playerBase>();
+        PB.UIFlag = false;
+        Destroy(gameObject);
     }
 }

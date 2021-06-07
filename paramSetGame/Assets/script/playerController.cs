@@ -72,6 +72,7 @@ public class playerController : MonoBehaviour
                     {
                         var UI = hitObj.transform.Find("UI");
                         UI.gameObject.SetActive(true);
+                        PB.cursor.SetActive(true);
                         PB.UIFlag = true;
                     }
                 }

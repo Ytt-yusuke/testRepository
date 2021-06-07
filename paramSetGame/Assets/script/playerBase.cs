@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class playerBase : MonoBehaviour
 {
-    public Slider speed;
     public Slider gravity;
     public Slider HP;
+
+    public GameObject cursor;
 
     public float speedNum;
     public float powerNum;
@@ -32,12 +33,13 @@ public class playerBase : MonoBehaviour
         groundDamageTime = 0;
         baseGravity = Physics2D.gravity.y;
         controlCount = 3;
+        cursor.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        speedNum = speed.value;
+        speedNum = 10;
         HP.value = HPNum;
         groundDamageTime += Time.deltaTime;
 

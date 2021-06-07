@@ -37,6 +37,8 @@ public class blasterScript : MonoBehaviour
 
     bulletScript BS;
 
+    playerBase PB;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,44 +47,48 @@ public class blasterScript : MonoBehaviour
         bulletDist = new Vector3(1,0,0);
         blasterDist = 1;
         BS = bullet.GetComponent<bulletScript>();
+        PB = playerObj.GetComponent<playerBase>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (PB.hackFlag == false)
         {
-            transform.position = playerObj.transform.position + new Vector3(1, 0.7f, 0);
-            transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
-            bulletDist = new Vector3(1,0,0);
-            blasterDist = 1;
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.position = playerObj.transform.position + new Vector3(-1, 0.7f, 0);
-            transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
-            bulletDist = new Vector3(-1,0,0);
-            blasterDist = -1;
-        }
-
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            transform.position = playerObj.transform.position + new Vector3(0, 1.7f, 0);
-            transform.rotation = Quaternion.AngleAxis(90, Vector3.forward);
-            bulletDist = new Vector3(0,1,0);
-        }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            if (canShot)
+            if (Input.GetKey(KeyCode.RightArrow))
             {
-                Instantiate(bullet, transform.position, Quaternion.identity);
-                BS.bulletSpeed = bulletDist * 10;
-                canShot = false;
-                reloadTime = 0;
+                transform.position = playerObj.transform.position + new Vector3(1, 0.7f, 0);
+                transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
+                bulletDist = new Vector3(1, 0, 0);
+                blasterDist = 1;
             }
 
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                transform.position = playerObj.transform.position + new Vector3(-1, 0.7f, 0);
+                transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
+                bulletDist = new Vector3(-1, 0, 0);
+                blasterDist = -1;
+            }
+
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                transform.position = playerObj.transform.position + new Vector3(0, 1.7f, 0);
+                transform.rotation = Quaternion.AngleAxis(90, Vector3.forward);
+                bulletDist = new Vector3(0, 1, 0);
+            }
+
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                if (canShot)
+                {
+                    Instantiate(bullet, transform.position, Quaternion.identity);
+                    BS.bulletSpeed = bulletDist * 10;
+                    canShot = false;
+                    reloadTime = 0;
+                }
+
+            }
         }
 
         transform.localScale = new Vector3(transform.localScale.x * blasterDist, transform.localScale.y, transform.localScale.z);
@@ -90,8 +96,6 @@ public class blasterScript : MonoBehaviour
         SettingBullet((int)bulletSize.value, (int)shotRange.value, BS, bullet);
         rangeText.text = BS.dist.ToString();
         sizeText.text = bullet.transform.localScale.x.ToString();
-
-
 
         if (reloadTime >= setTime)
         {

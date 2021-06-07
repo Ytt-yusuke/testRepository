@@ -13,7 +13,7 @@ public class UIset : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void SET()
@@ -21,6 +21,7 @@ public class UIset : MonoBehaviour
         gameObject.SetActive(false);
         var playerObj = GameObject.Find("Player");
         var PB = playerObj.GetComponent<playerBase>();
+        PB.cursor.SetActive(false);
         PB.UIFlag = false;
         PB.controlCount--;
     }

@@ -59,7 +59,7 @@ public class blasterScript : MonoBehaviour
             {
                 transform.position = playerObj.transform.position + new Vector3(1, 0.7f, 0);
                 transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
-                bulletDist = new Vector3(1, 0, 0);
+                bulletDist = Vector3.right;
                 blasterDist = 1;
             }
 
@@ -67,7 +67,7 @@ public class blasterScript : MonoBehaviour
             {
                 transform.position = playerObj.transform.position + new Vector3(-1, 0.7f, 0);
                 transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
-                bulletDist = new Vector3(-1, 0, 0);
+                bulletDist = Vector3.left;
                 blasterDist = -1;
             }
 
@@ -75,7 +75,7 @@ public class blasterScript : MonoBehaviour
             {
                 transform.position = playerObj.transform.position + new Vector3(0, 1.7f, 0);
                 transform.rotation = Quaternion.AngleAxis(90, Vector3.forward);
-                bulletDist = new Vector3(0, 1, 0);
+                bulletDist = Vector3.up;
             }
 
             if (Input.GetKeyDown(KeyCode.B))
@@ -83,7 +83,6 @@ public class blasterScript : MonoBehaviour
                 if (canShot)
                 {
                     Instantiate(bullet, transform.position, Quaternion.identity);
-                    BS.bulletSpeed = bulletDist * 10;
                     canShot = false;
                     reloadTime = 0;
                 }
@@ -101,6 +100,8 @@ public class blasterScript : MonoBehaviour
         {
             canShot = true;
         }
+
+        Debug.Log(bulletDist);
     }
 
     void SettingBullet(int bulletSize, int shotRange, bulletScript BS, GameObject bullet)
@@ -109,5 +110,6 @@ public class blasterScript : MonoBehaviour
         bullet.transform.localScale = Vector3.one * bulletScale[bulletSize];
         BS.dist = bulletRange[shotRange];
         BS.damage = bulletDamage[shotRange];
+        BS.bulletSpeed = bulletDist * 10;
     }
 }

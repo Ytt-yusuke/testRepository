@@ -9,6 +9,7 @@ public class playerBase : MonoBehaviour
     public Slider HP;
 
     public GameObject cursor;
+    public GameObject alliesTarget;
 
     public float speedNum;
     public float powerNum;
@@ -22,6 +23,7 @@ public class playerBase : MonoBehaviour
 
     public bool hackFlag;
     public bool UIFlag;
+    public bool enemyAlert;
 
     public LayerMask GroundLayer;
 

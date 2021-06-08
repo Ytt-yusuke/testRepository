@@ -70,6 +70,11 @@ public class playerController : MonoBehaviour
                 jumptime = PB.jumpLimited;
                 jumpFlag = false;
             }
+
+            if(onGround == false)
+            {
+                PB.groundDamageTime = 0;
+            }
         }
         else
         {
@@ -146,6 +151,20 @@ public class playerController : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().color = Color.red;
                 Physics2D.IgnoreLayerCollision(8, 11);
             }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.GetComponent<enemyBase>().HPNum > 0)
+        {
+            PB.enemyAlert = true;
+            PB.alliesTarget = collision.gameObject;
+            Debug.Log("Enemy!!");
+        }
+        else if (collision.gameObject.tag != "Enemy")
+        {
+            PB.enemyAlert = false;
         }
     }
 }

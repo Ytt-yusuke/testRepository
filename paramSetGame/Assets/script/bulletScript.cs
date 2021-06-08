@@ -57,7 +57,12 @@ public class bulletScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Enemy"))
+        if(collision.gameObject.layer == 11)
+        {
+            collision.gameObject.GetComponent<enemyBase>().HPNum -= damage;
+            Destroy(gameObject);
+        }
+        if(collision.gameObject.layer == 9)
         {
             collision.gameObject.GetComponent<enemyBase>().HPNum -= damage;
             Destroy(gameObject);

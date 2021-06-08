@@ -9,50 +9,93 @@ public class testenemy : MonoBehaviour
     private bool renderObj;
     private bool firstRenderObj;
 
+    private playerBase PB;
+
     // Start is called before the first frame update
     void Start()
     {
         EB = GetComponent<enemyBase>();
-        EB.enemyNum = 1;
+        PB = EB.playerObj.GetComponent<playerBase>();
         EB.EnemySet(EB.enemyNum);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (EB.HPNum <= 0)
+        if (gameObject.layer == 11 || gameObject.layer == 9)
         {
-            if(EB.tribeNum == 0)
+            if (EB.HPNum > 0)
             {
-                gameObject.layer = 9;
+                if (renderObj == false && firstRenderObj == true && EB.renderDestroyFlag == true)
+                {
+                    Destroy(gameObject);
+                }
+                else if (transform.position.y < -20)
+                {
+                    Destroy(gameObject);
+                }
+
+                if (EB.enemyNum == 0)
+                {
+                    transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
+                }
+                else if (EB.enemyNum == 1)
+                {
+                    transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
+
+                    if (EB.HPNum <= EB.HP.maxValue * 0.8f)
+                    {
+                        gameObject.layer = 9;
+                    }
+                }
             }
-            else if(EB.tribeNum == 1)
+            else
             {
-                gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 122, 0, 255);
+                gameObject.layer = 8;
+                gameObject.tag = "Allies";
+                EB.SetHP();
+                //PB.enemyAlert = false;
+
+                if (EB.enemyNum == 1)
+                {
+                    EB.allies.gameObject.SetActive(true);
+                    EB.obj.gameObject.SetActive(true);
+                }
             }
+
         }
         else
         {
-         
-            if (renderObj == false && firstRenderObj == true)
-            {           
-                Destroy(gameObject);       
-            }    
-            else if(transform.position.y < -20)      
-            {     
+            if (EB.allies.isOn == true)
+            {
+                gameObject.layer = 8;
+                gameObject.tag = "Allies";
+                EB.destroyButton.gameObject.SetActive(false);
+            }
+            else if (EB.obj.isOn == true)
+            {
+                gameObject.layer = 10;
+                gameObject.tag = "Object";
+                EB.destroyButton.gameObject.SetActive(true);
+            }
+
+            if(EB.HPNum <= 0)
+            {
                 Destroy(gameObject);
             }
-            if (EB.tribeNum == 0)
+
+            if(PB.enemyAlert == true)
             {
-                transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, PB.alliesTarget.transform.position, EB.speedNum * Time.deltaTime);
             }
-            else if (EB.tribeNum == 1)
+            else
             {
-                transform.Translate(Vector2.right * EB.speedNum * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, EB.playerObj.transform.position, EB.speedNum * Time.deltaTime);
             }
         }
 
         renderObj = false;
+        EB.HP.value = EB.HPNum;
     }
 
     private void OnWillRenderObject()
@@ -70,6 +113,21 @@ public class testenemy : MonoBehaviour
         var playerObj = GameObject.Find("Player");
         var PB = playerObj.GetComponent<playerBase>();
         PB.UIFlag = false;
+        PB.cursor.SetActive(false);
         Destroy(gameObject);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 11 && gameObject.layer == 8)
+        {
+            collision.gameObject.GetComponent<enemyBase>().HPNum--;
+            EB.HPNum--;
+        }
+        else if (collision.gameObject.layer == 9 && gameObject.layer == 8)
+        {
+            collision.gameObject.GetComponent<enemyBase>().HPNum--;
+            EB.HPNum--;
+        }
     }
 }

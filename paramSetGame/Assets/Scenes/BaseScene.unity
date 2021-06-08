@@ -163,6 +163,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4348551090405871392}
   m_PrefabAsset: {fileID: 0}
+--- !u!58 &407097012
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407097005}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.74}
+  serializedVersion: 2
+  m_Radius: 10
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,7 +899,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1240262754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1057,6 +1073,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 358628984821413921, guid: 96520c68016f73c40b4e445b13e40da6,
+        type: 3}
+      propertyPath: bulletDamage.Array.data[0]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 358628984821413921, guid: 96520c68016f73c40b4e445b13e40da6,
+        type: 3}
+      propertyPath: bulletDamage.Array.data[1]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 358628984821413921, guid: 96520c68016f73c40b4e445b13e40da6,
+        type: 3}
+      propertyPath: bulletDamage.Array.data[3]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 358628984821413921, guid: 96520c68016f73c40b4e445b13e40da6,
+        type: 3}
+      propertyPath: bulletDamage.Array.data[4]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 964757382871691763, guid: 96520c68016f73c40b4e445b13e40da6,
         type: 3}
       propertyPath: m_Enabled
@@ -1366,6 +1402,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248916190468253778, guid: 96520c68016f73c40b4e445b13e40da6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5248916190468253778, guid: 96520c68016f73c40b4e445b13e40da6,
         type: 3}

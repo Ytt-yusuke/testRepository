@@ -8,10 +8,11 @@ public class playerController : MonoBehaviour
     private playerBase PB;
     private Rigidbody2D RB2;
 
+    private bool onGround;
     private bool jumpFlag;
 
-    private float jumpPower = 300;
     private float damageTimer = 0;
+    private float jumptime;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,7 @@ public class playerController : MonoBehaviour
     void Update()
     {
         moveDist = Vector2.zero;
-        jumpFlag = IsCollision();
+        onGround = IsCollision();
 
         if (damageTimer > 0)
         {
@@ -50,9 +51,23 @@ public class playerController : MonoBehaviour
                 moveDist += new Vector2(-1, 0);
             }
 
-            if(Input.GetKeyDown(KeyCode.LeftShift) && jumpFlag == true)
+            if(Input.GetKeyDown(KeyCode.LeftShift) && onGround == true)
             {
-                RB2.AddForce(Vector2.up * jumpPower);
+                RB2.velocity = new Vector3(0, PB.jumpPower, 0);
+                jumptime = 0;
+                jumpFlag = true;
+            }
+
+            if(Input.GetKey(KeyCode.LeftShift) && onGround == false && jumptime < PB.jumpLimited && jumpFlag == true)
+            {
+                RB2.velocity = new Vector3(0, PB.jumpPower, 0);
+                Debug.Log("Plus");
+                jumptime += Time.deltaTime;
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                jumptime = PB.jumpLimited;
                 jumpFlag = false;
             }
         }
@@ -105,6 +120,8 @@ public class playerController : MonoBehaviour
         moveDist.Normalize();
 
         transform.Translate(moveDist * PB.speedNum * Time.deltaTime);
+
+        Debug.Log(jumptime);
     }
 
     bool IsCollision()

@@ -16,6 +16,8 @@ public class playerBase : MonoBehaviour
     private float baseGravity;
 
     public float groundDamageTime;
+    public float jumpLimited;
+    public float jumpPower;
     public int controlCount;
 
     public bool hackFlag;
@@ -30,9 +32,7 @@ public class playerBase : MonoBehaviour
         hackFlag = false;
         UIFlag = false;
         HPNum = HP.value;
-        groundDamageTime = 0;
         baseGravity = Physics2D.gravity.y;
-        controlCount = 3;
         cursor.SetActive(false);
     }
 

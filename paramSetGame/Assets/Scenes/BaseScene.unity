@@ -1269,6 +1269,21 @@ PrefabInstance:
       objectReference: {fileID: 519420031}
     - target: {fileID: 4348551090267242894, guid: 96520c68016f73c40b4e445b13e40da6,
         type: 3}
+      propertyPath: jumpPower
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4348551090267242894, guid: 96520c68016f73c40b4e445b13e40da6,
+        type: 3}
+      propertyPath: jumpLimited
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4348551090267242894, guid: 96520c68016f73c40b4e445b13e40da6,
+        type: 3}
+      propertyPath: controlCount
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4348551090267242894, guid: 96520c68016f73c40b4e445b13e40da6,
+        type: 3}
       propertyPath: GroundLayer.m_Bits
       value: 5120
       objectReference: {fileID: 0}

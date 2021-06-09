@@ -1578,6 +1578,7 @@ MonoBehaviour:
   damageTime: 0
   HPNum: 5
   speedNum: 1
+  atackLimited: 1
   sizeNum:
   - 0.1
   - 0.5
@@ -1590,6 +1591,7 @@ MonoBehaviour:
   - 5
   - 7
   - 10
+  speed: []
   enemyNum: 0
   renderDestroyFlag: 1
 --- !u!1 &5845411616380572689

@@ -1,0 +1,33 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class searchEnemy : MonoBehaviour
+{
+    public GameObject playerObj;
+    private playerBase PB;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        playerObj = transform.parent.gameObject;
+        PB = playerObj.GetComponent<playerBase>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.position = playerObj.transform.position;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Debug.Log(collision.gameObject.name);
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            PB.enemyAlert = true;
+            PB.alliesTarget = collision.gameObject;
+            Debug.Log("Enemy!!");
+        }
+    }
+}

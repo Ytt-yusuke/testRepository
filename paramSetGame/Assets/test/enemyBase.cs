@@ -21,6 +21,8 @@ public class enemyBase : MonoBehaviour
 
     public float speedNum;
 
+    public float atackLimited;
+
     public float[] sizeNum;
     public float[] variableHP;
     public float[] speed;
@@ -46,30 +48,40 @@ public class enemyBase : MonoBehaviour
 
     public void EnemySet(int num)
     {
-        gameObject.layer = 11;
+        gameObject.layer = 9;
 
         HPNum = variableHP[2];
         HP.maxValue = HPNum;
         HP.value = HPNum;
 
         speedNum = speed[2];
-
-        if(num == 1)
-        {
-            allies.gameObject.SetActive(false);
-            obj.gameObject.SetActive(false);
-        }
     }
 
     public void SetHP()
     {
-        HPNum = variableHP[(int)size.value];
-        HP.maxValue = HPNum;
+        var HPratio = HP.value / HP.maxValue;
+        HP.maxValue = variableHP[(int)size.value];
+        HPNum = HP.maxValue * HPratio;
+        HP.value = HPNum;
+
         transform.localScale = Vector3.one * sizeNum[(int)size.value];
 
         if (gameObject.layer != 11 && gameObject.layer != 9)
         {
             speedNum = speed[(int)size.value];
+        }
+
+        if (allies.isOn == true)
+        {
+            gameObject.layer = 8;
+            gameObject.tag = "Allies";
+            destroyButton.gameObject.SetActive(false);
+        }
+        else if (obj.isOn == true)
+        {
+            gameObject.layer = 10;
+            gameObject.tag = "Object";
+            destroyButton.gameObject.SetActive(true);
         }
     }
 }

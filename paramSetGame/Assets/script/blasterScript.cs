@@ -100,8 +100,6 @@ public class blasterScript : MonoBehaviour
         {
             canShot = true;
         }
-
-        Debug.Log(bulletDist);
     }
 
     void SettingBullet(int bulletSize, int shotRange, bulletScript BS, GameObject bullet)

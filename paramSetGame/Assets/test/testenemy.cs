@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class testenemy : MonoBehaviour
 {
-    private enemyBase EB;
+    private enemyBase EB; 
+    private playerBase PB;
 
     private bool renderObj;
     private bool firstRenderObj;
 
-    private playerBase PB;
+    private float atackTime;
 
     // Start is called before the first frame update
     void Start()
@@ -22,9 +23,16 @@ public class testenemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        atackTime += Time.deltaTime;
+
+        if (EB.HPNum <= 0)
+        {
+            Destroy(gameObject);
+        }
+
         if (gameObject.layer == 11 || gameObject.layer == 9)
         {
-            if (EB.HPNum > 0)
+            if (EB.HPNum / EB.HP.maxValue > 0.1f)
             {
                 if (renderObj == false && firstRenderObj == true && EB.renderDestroyFlag == true)
                 {
@@ -51,39 +59,13 @@ public class testenemy : MonoBehaviour
             }
             else
             {
-                gameObject.layer = 8;
-                gameObject.tag = "Allies";
-                EB.SetHP();
-                //PB.enemyAlert = false;
-
-                if (EB.enemyNum == 1)
-                {
-                    EB.allies.gameObject.SetActive(true);
-                    EB.obj.gameObject.SetActive(true);
-                }
+                transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
+                gameObject.layer = 9;
             }
 
         }
         else
         {
-            if (EB.allies.isOn == true)
-            {
-                gameObject.layer = 8;
-                gameObject.tag = "Allies";
-                EB.destroyButton.gameObject.SetActive(false);
-            }
-            else if (EB.obj.isOn == true)
-            {
-                gameObject.layer = 10;
-                gameObject.tag = "Object";
-                EB.destroyButton.gameObject.SetActive(true);
-            }
-
-            if(EB.HPNum <= 0)
-            {
-                Destroy(gameObject);
-            }
-
             if(PB.enemyAlert == true)
             {
                 transform.position = Vector2.MoveTowards(transform.position, PB.alliesTarget.transform.position, EB.speedNum * Time.deltaTime);
@@ -117,17 +99,22 @@ public class testenemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 11 && gameObject.layer == 8)
+        if (atackTime >= EB.atackLimited)
         {
-            collision.gameObject.GetComponent<enemyBase>().HPNum--;
-            EB.HPNum--;
-        }
-        else if (collision.gameObject.layer == 9 && gameObject.layer == 8)
-        {
-            collision.gameObject.GetComponent<enemyBase>().HPNum--;
-            EB.HPNum--;
+            if (collision.gameObject.layer == 11 && gameObject.layer == 8)
+            {
+                collision.gameObject.GetComponent<enemyBase>().HPNum--;
+                EB.HPNum--;
+            }
+            else if (collision.gameObject.layer == 9 && gameObject.layer == 8)
+            {
+                collision.gameObject.GetComponent<enemyBase>().HPNum--;
+                EB.HPNum--;
+            }
+
+            atackTime = 0;
         }
     }
 }

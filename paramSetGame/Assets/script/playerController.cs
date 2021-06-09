@@ -7,6 +7,7 @@ public class playerController : MonoBehaviour
     private Vector2 moveDist;
     private playerBase PB;
     private Rigidbody2D RB2;
+    private RaycastHit hit;
 
     private bool onGround;
     private bool jumpFlag;
@@ -78,12 +79,12 @@ public class playerController : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.Space) && PB.controlCount > 0) //マウスがクリックされたら
+            if (Input.GetKeyDown(KeyCode.Space) && PB.controlCount > 0)
             {
-                var mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                var hit = Physics2D.Raycast(mousePoint, Vector2.zero);
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction);
 
-                if(hit && PB.UIFlag == false)
+                if(hit.collider && PB.UIFlag == false)
                 {
                     var hitObj = hit.collider.gameObject;
                     Debug.Log(hitObj);
@@ -151,20 +152,6 @@ public class playerController : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().color = Color.red;
                 Physics2D.IgnoreLayerCollision(8, 11);
             }
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.GetComponent<enemyBase>().HPNum > 0)
-        {
-            PB.enemyAlert = true;
-            PB.alliesTarget = collision.gameObject;
-            Debug.Log("Enemy!!");
-        }
-        else if (collision.gameObject.tag != "Enemy")
-        {
-            PB.enemyAlert = false;
         }
     }
 }

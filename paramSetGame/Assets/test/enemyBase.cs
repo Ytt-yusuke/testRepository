@@ -9,6 +9,7 @@ public class enemyBase : MonoBehaviour
     public Slider size;
     public Toggle allies;
     public Toggle obj;
+    public Toggle enemy;
     public Button destroyButton;
     public TextMeshProUGUI sizeText;
     public Slider HP;
@@ -30,6 +31,7 @@ public class enemyBase : MonoBehaviour
     public int enemyNum;
 
     public bool renderDestroyFlag;
+    public bool canHack;
 
 
     // Start is called before the first frame update
@@ -89,6 +91,13 @@ public class enemyBase : MonoBehaviour
             gameObject.layer = 10;
             gameObject.tag = "Object";
             destroyButton.gameObject.SetActive(true);
+        }
+
+        if(enemy.isOn == false)
+        {
+            enemy.gameObject.SetActive(false);
+            var objToggle = obj.navigation;
+            objToggle.selectOnRight = null;
         }
     }
 }

@@ -10,6 +10,7 @@ public class playerBase : MonoBehaviour
 
     public GameObject cursor;
     public GameObject alliesTarget;
+    public GameObject hackTarget;
 
     public float speedNum;
     public float powerNum;

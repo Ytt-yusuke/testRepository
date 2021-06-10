@@ -122,4 +122,20 @@ public class testenemy : MonoBehaviour
             atackTime = 0;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == 15)
+        {
+            EB.canHack = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 15)
+        {
+            EB.canHack = false;
+        }
+    }
 }

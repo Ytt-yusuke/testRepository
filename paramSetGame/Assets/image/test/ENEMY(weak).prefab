@@ -1913,6 +1913,7 @@ MonoBehaviour:
   size: {fileID: 7881038867477352509}
   allies: {fileID: 7279080184989405552}
   obj: {fileID: 27100917087521682}
+  enemy: {fileID: 655327817467128107}
   destroyButton: {fileID: 4666923205151245175}
   sizeText: {fileID: 1957401473606198542}
   HP: {fileID: 2943843534032159997}

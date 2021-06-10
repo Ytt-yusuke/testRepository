@@ -89,13 +89,17 @@ public class playerController : MonoBehaviour
                 {
                     var hitObj = hit.collider.gameObject;
                     Debug.Log(hitObj);
+                    Debug.Log(Vector2.Distance(gameObject.transform.position, hitObj.transform.position));
 
-                    if (hitObj.layer == 8 || hitObj.layer == 9 || hitObj.layer == 10)
+                    if (Vector2.Distance(gameObject.transform.position, hitObj.transform.position) <= 5)
                     {
-                        var UI = hitObj.transform.Find("UI");
-                        UI.gameObject.SetActive(true);
-                        PB.cursor.SetActive(true);
-                        PB.UIFlag = true;
+                        if (hitObj.layer == 8 || hitObj.layer == 9 || hitObj.layer == 10)
+                        {
+                            var UI = hitObj.transform.Find("UI");
+                            UI.gameObject.SetActive(true);
+                            PB.cursor.SetActive(true);
+                            PB.UIFlag = true;
+                        }
                     }
                 }
             }
@@ -127,8 +131,6 @@ public class playerController : MonoBehaviour
         moveDist.Normalize();
 
         transform.Translate(moveDist * PB.speedNum * Time.deltaTime);
-
-        Debug.Log(jumptime);
     }
 
     bool IsCollision()

@@ -48,7 +48,14 @@ public class enemyBase : MonoBehaviour
 
     public void EnemySet(int num)
     {
-        gameObject.layer = 9;
+        if (enemyNum == 0)
+        {
+            gameObject.layer = 9;
+        }
+        else if(enemyNum == 1)
+        {
+            gameObject.layer = 11;
+        }
 
         HPNum = variableHP[2];
         HP.maxValue = HPNum;

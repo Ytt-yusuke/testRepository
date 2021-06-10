@@ -1387,6 +1387,11 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4555619567636488278, guid: 96520c68016f73c40b4e445b13e40da6,
+        type: 3}
+      propertyPath: m_Radius
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4589133168175363242, guid: 96520c68016f73c40b4e445b13e40da6,
         type: 3}
       propertyPath: m_Constraints

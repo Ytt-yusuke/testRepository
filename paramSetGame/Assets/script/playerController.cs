@@ -82,7 +82,8 @@ public class playerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && PB.controlCount > 0)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit2D hit = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction);
+                int layerMask = 1 << 8 | 1 << 9 | 1 << 10;
+                RaycastHit2D hit = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity, layerMask);
 
                 if(hit.collider && PB.UIFlag == false)
                 {

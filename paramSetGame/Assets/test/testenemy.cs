@@ -30,49 +30,54 @@ public class testenemy : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (transform.position.y < -20)
+        {
+            if(PB.alliesTarget == gameObject)
+            {
+                PB.enemyAlert = false;
+            }
+            
+            Destroy(gameObject);
+        }
+
         if (gameObject.layer == 11 || gameObject.layer == 9)
         {
-            if (EB.HPNum / EB.HP.maxValue > 0.1f)
+            if (renderObj == false && firstRenderObj == true && EB.renderDestroyFlag == true)
             {
-                if (renderObj == false && firstRenderObj == true && EB.renderDestroyFlag == true)
+                if (PB.alliesTarget == gameObject)
                 {
-                    Destroy(gameObject);
-                }
-                else if (transform.position.y < -20)
-                {
-                    Destroy(gameObject);
+                    PB.enemyAlert = false;
                 }
 
-                if (EB.enemyNum == 0)
-                {
-                    transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
-                }
-                else if (EB.enemyNum == 1)
-                {
-                    transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
-
-                    if (EB.HPNum <= EB.HP.maxValue * 0.8f)
-                    {
-                        gameObject.layer = 9;
-                    }
-                }
+                Destroy(gameObject);
             }
-            else
+
+            if (EB.enemyNum == 0)
             {
                 transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
-                gameObject.layer = 9;
+            }
+            else if (EB.enemyNum == 1)
+            {
+                transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
+
+                if (EB.HPNum <= EB.HP.maxValue * 0.8f)
+                {
+                    gameObject.layer = 9;
+                }
             }
 
         }
         else
         {
-            if(PB.enemyAlert == true)
+            if(PB.enemyAlert == true && PB.alliesTarget != null)
             {
                 transform.position = Vector2.MoveTowards(transform.position, PB.alliesTarget.transform.position, EB.speedNum * Time.deltaTime);
+                Debug.Log("gotoenemy");
             }
             else
             {
                 transform.position = Vector2.MoveTowards(transform.position, EB.playerObj.transform.position, EB.speedNum * Time.deltaTime);
+                Debug.Log("gotoplayer");
             }
         }
 
@@ -99,7 +104,7 @@ public class testenemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (atackTime >= EB.atackLimited)
         {

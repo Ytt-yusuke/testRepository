@@ -2378,8 +2378,7 @@ MonoBehaviour:
   destroyButton: {fileID: 5517206546348771711}
   sizeText: {fileID: 5585769660572391606}
   HP: {fileID: 6848505319163255484}
-  playerObj: {fileID: 4348551090267242893, guid: 96520c68016f73c40b4e445b13e40da6,
-    type: 3}
+  playerObj: {fileID: 0}
   damageTime: 0
   HPNum: 100
   speedNum: 1

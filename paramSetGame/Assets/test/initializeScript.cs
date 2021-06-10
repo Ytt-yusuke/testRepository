@@ -8,7 +8,7 @@ public class initializeScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SceneManager.LoadScene("CloudScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("NormalScene", LoadSceneMode.Additive);
     }
 
     // Update is called once per frame

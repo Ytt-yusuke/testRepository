@@ -22,12 +22,14 @@ public class searchEnemy : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.CompareTag("Enemy"))
         {
             PB.enemyAlert = true;
             PB.alliesTarget = collision.gameObject;
-            Debug.Log("Enemy!!");
+        }
+        else
+        {
+            PB.enemyAlert = false;
         }
     }
 }

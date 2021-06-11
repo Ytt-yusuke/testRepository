@@ -15,6 +15,7 @@ public class enemyBase : MonoBehaviour
     public Slider HP;
 
     public GameObject playerObj;
+    public GameObject frameObj;
 
     public float damageTime;
 
@@ -37,9 +38,12 @@ public class enemyBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canHack = false;
         damageTime = 0;
         destroyButton.gameObject.SetActive(false);
         playerObj = GameObject.Find("Player");
+        frameObj = gameObject.transform.Find("Frame").gameObject;
+        frameObj.SetActive(false);
     }
 
     // Update is called once per frame

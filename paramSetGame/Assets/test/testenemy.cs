@@ -42,6 +42,25 @@ public class testenemy : MonoBehaviour
 
         if (gameObject.layer == 11 || gameObject.layer == 9)
         {
+            if (Time.timeScale == 0)
+            {
+                if (EB.canHack == true)
+                {
+                    gameObject.layer = 9;
+                    EB.frameObj.SetActive(true);
+                }
+                else
+                {
+                    gameObject.layer = 11;
+                    EB.frameObj.SetActive(false);
+                }
+            }
+            else
+            {
+                gameObject.layer = 11;
+                EB.frameObj.SetActive(false);
+            }
+
             if (renderObj == false && firstRenderObj == true && EB.renderDestroyFlag == true)
             {
                 if (PB.alliesTarget == gameObject)
@@ -123,7 +142,7 @@ public class testenemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.gameObject.layer == 15)
         {

@@ -40,7 +40,7 @@ public class playerController : MonoBehaviour
             Physics2D.IgnoreLayerCollision(8, 11, false);
         }
 
-        if (PB.hackFlag == false)
+
         { 
             if (Input.GetKey(KeyCode.RightArrow))
             {
@@ -77,9 +77,16 @@ public class playerController : MonoBehaviour
                 PB.groundDamageTime = 0;
             }
         }
-        else
+        
+        if(PB.hackFlag == true)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && PB.controlCount > 0)
+            if(Input.GetKeyDown(KeyCode.B))
+            {
+                Time.timeScale = 0;
+                PB.timeStopFlag = true;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) && PB.controlCount > 0 && PB.timeStopFlag == true)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 int layerMask = 1 << 8 | 1 << 9 | 1 << 10;
@@ -88,8 +95,6 @@ public class playerController : MonoBehaviour
                 if(hit.collider && PB.UIFlag == false)
                 {
                     var hitObj = hit.collider.gameObject;
-                    Debug.Log(hitObj);
-                    Debug.Log(Vector2.Distance(gameObject.transform.position, hitObj.transform.position));
 
                     if (Vector2.Distance(gameObject.transform.position, hitObj.transform.position) <= 5)
                     {
@@ -99,6 +104,7 @@ public class playerController : MonoBehaviour
                             UI.gameObject.SetActive(true);
                             PB.cursor.SetActive(true);
                             PB.UIFlag = true;
+                            Time.timeScale = 0;
                         }
                     }
                 }
@@ -110,17 +116,21 @@ public class playerController : MonoBehaviour
             if (PB.hackFlag == false)
             {
                 PB.hackFlag = true;
-                Time.timeScale = 0;
+                if (PB.circleMode == true)
+                {
+                    PB.hackCircle.SetActive(true);
+                }
             }
             else
             {
-                if (PB.UIFlag == false)
+                if(PB.UIFlag == false)
                 {
                     PB.hackFlag = false;
+                    PB.hackCircle.SetActive(false);
+                    PB.timeStopFlag = false;
                     Time.timeScale = 1;
                 }
             }
-
         }
 
         if(Input.GetKeyDown(KeyCode.I))

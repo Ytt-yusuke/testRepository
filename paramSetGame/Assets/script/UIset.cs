@@ -24,5 +24,9 @@ public class UIset : MonoBehaviour
         PB.cursor.SetActive(false);
         PB.UIFlag = false;
         PB.controlCount--;
+        PB.hackFlag = false;
+        PB.hackCircle.SetActive(false);
+        Time.timeScale = 1;
+        PB.timeStopFlag = false;
     }
 }

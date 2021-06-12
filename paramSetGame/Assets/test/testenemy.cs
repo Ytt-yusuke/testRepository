@@ -48,6 +48,7 @@ public class testenemy : MonoBehaviour
                 {
                     gameObject.layer = 9;
                     EB.frameObj.SetActive(true);
+                    PB.selectObj.Add(gameObject);
                 }
                 else
                 {
@@ -88,7 +89,24 @@ public class testenemy : MonoBehaviour
         }
         else
         {
-            if(PB.enemyAlert == true && PB.alliesTarget != null)
+            if (Time.timeScale == 0)
+            {
+                if (EB.canHack == true)
+                {
+                    EB.frameObj.SetActive(true);
+                    PB.selectObj.Add(gameObject);
+                }
+                else
+                {
+                    EB.frameObj.SetActive(false);
+                }
+            }
+            else
+            {
+                EB.frameObj.SetActive(false);
+            }
+
+            if (PB.enemyAlert == true && PB.alliesTarget != null)
             {
                 transform.position = Vector2.MoveTowards(transform.position, PB.alliesTarget.transform.position, EB.speedNum * Time.deltaTime);
                 Debug.Log("gotoenemy");

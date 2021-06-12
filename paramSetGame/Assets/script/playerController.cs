@@ -62,7 +62,6 @@ public class playerController : MonoBehaviour
             if(Input.GetKey(KeyCode.LeftShift) && onGround == false && jumptime < PB.jumpLimited && jumpFlag == true)
             {
                 RB2.velocity = new Vector3(0, PB.jumpPower, 0);
-                Debug.Log("Plus");
                 jumptime += Time.deltaTime;
             }
 
@@ -85,26 +84,39 @@ public class playerController : MonoBehaviour
                 Time.timeScale = 0;
                 PB.timeStopFlag = true;
             }
+            Debug.Log(PB.selectObj.Count);
 
-            if (Input.GetKeyDown(KeyCode.Space) && PB.controlCount > 0 && PB.timeStopFlag == true)
+            if (PB.timeStopFlag == true)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                int layerMask = 1 << 8 | 1 << 9 | 1 << 10;
-                RaycastHit2D hit = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity, layerMask);
-
-                if(hit.collider && PB.UIFlag == false)
+                if (PB.selectObj.Count == 1)
                 {
-                    var hitObj = hit.collider.gameObject;
-
-                    if (Vector2.Distance(gameObject.transform.position, hitObj.transform.position) <= 5)
+                    var UI = PB.selectObj[0].transform.Find("UI");
+                    UI.gameObject.SetActive(true);
+                    PB.cursor.SetActive(true);
+                    PB.UIFlag = true;
+                    Time.timeScale = 0;
+                }
+                else
+                {
+                    if (Input.GetKeyDown(KeyCode.Space) && PB.controlCount > 0 && PB.timeStopFlag == true)
                     {
-                        if (hitObj.layer == 8 || hitObj.layer == 9 || hitObj.layer == 10)
+                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                        int layerMask = 1 << 8 | 1 << 9 | 1 << 10;
+                        RaycastHit2D hit = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity, layerMask);
+
+                        if (hit.collider && PB.UIFlag == false)
                         {
-                            var UI = hitObj.transform.Find("UI");
-                            UI.gameObject.SetActive(true);
-                            PB.cursor.SetActive(true);
-                            PB.UIFlag = true;
-                            Time.timeScale = 0;
+                            var hitObj = hit.collider.gameObject;
+
+                            if (hitObj.layer == 8 || hitObj.layer == 9 || hitObj.layer == 10)
+                            {
+                                var UI = hitObj.transform.Find("UI");
+                                UI.gameObject.SetActive(true);
+                                PB.cursor.SetActive(true);
+                                PB.UIFlag = true;
+                                Time.timeScale = 0;
+                            }
+
                         }
                     }
                 }

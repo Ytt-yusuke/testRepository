@@ -23,6 +23,7 @@ public class playerBase : MonoBehaviour
     public float jumpLimited;
     public float jumpPower;
     public int controlCount;
+    public int hitEnemyCount;
 
     public bool hackFlag;
     public bool UIFlag;
@@ -56,6 +57,7 @@ public class playerBase : MonoBehaviour
         speedNum = 10;
         HP.value = HPNum;
         groundDamageTime += Time.deltaTime;
+        Debug.Log(selectObj.Count);
 
         switch (gravity.value)
         {
@@ -84,5 +86,10 @@ public class playerBase : MonoBehaviour
         {
             instSpace.SetActive(true);
         }
+    }
+
+    private void LateUpdate()
+    {
+        selectObj.Clear();
     }
 }

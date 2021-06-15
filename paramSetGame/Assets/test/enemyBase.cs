@@ -32,13 +32,10 @@ public class enemyBase : MonoBehaviour
     public int enemyNum;
 
     public bool renderDestroyFlag;
-    public bool canHack;
-
 
     // Start is called before the first frame update
     void Start()
     {
-        canHack = false;
         damageTime = 0;
         destroyButton.gameObject.SetActive(false);
         playerObj = GameObject.Find("Player");
@@ -54,14 +51,7 @@ public class enemyBase : MonoBehaviour
 
     public void EnemySet(int num)
     {
-        if (enemyNum == 0)
-        {
-            gameObject.layer = 9;
-        }
-        else if(enemyNum == 1)
-        {
-            gameObject.layer = 11;
-        }
+        gameObject.layer = 11;
 
         HPNum = variableHP[2];
         HP.maxValue = HPNum;
@@ -89,12 +79,14 @@ public class enemyBase : MonoBehaviour
             gameObject.layer = 8;
             gameObject.tag = "Allies";
             destroyButton.gameObject.SetActive(false);
+            gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
         }
         else if (obj.isOn == true)
         {
             gameObject.layer = 10;
             gameObject.tag = "Object";
             destroyButton.gameObject.SetActive(true);
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(164, 123, 92, 1);
         }
 
         if(enemy.isOn == false)

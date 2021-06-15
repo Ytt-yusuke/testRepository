@@ -21,12 +21,11 @@ public class instSpace : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (count == 0)
+        if (!GameObject.Find("Space"))
         {
             if (Input.GetKeyDown(KeyCode.H))
             {
                 Instantiate(space, playerObj.transform.position, Quaternion.identity);
-                count++;
             }
         }
     }

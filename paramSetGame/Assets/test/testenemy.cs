@@ -9,6 +9,9 @@ public class testenemy : MonoBehaviour
 
     private bool renderObj;
     private bool firstRenderObj;
+    private bool insideSpace;
+
+    private spaceSet SS;
 
     private float atackTime;
 
@@ -18,6 +21,7 @@ public class testenemy : MonoBehaviour
         EB = GetComponent<enemyBase>();
         PB = EB.playerObj.GetComponent<playerBase>();
         EB.EnemySet(EB.enemyNum);
+        insideSpace = false;
     }
 
     // Update is called once per frame
@@ -40,28 +44,8 @@ public class testenemy : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (gameObject.layer == 11 || gameObject.layer == 9)
+        if (gameObject.layer == 11)
         {
-            if (Time.timeScale == 0)
-            {
-                if (EB.canHack == true)
-                {
-                    gameObject.layer = 9;
-                    EB.frameObj.SetActive(true);
-                    PB.selectObj.Add(gameObject);
-                }
-                else
-                {
-                    gameObject.layer = 11;
-                    EB.frameObj.SetActive(false);
-                }
-            }
-            else
-            {
-                gameObject.layer = 11;
-                EB.frameObj.SetActive(false);
-            }
-
             if (renderObj == false && firstRenderObj == true && EB.renderDestroyFlag == true)
             {
                 if (PB.alliesTarget == gameObject)
@@ -79,27 +63,25 @@ public class testenemy : MonoBehaviour
             else if (EB.enemyNum == 1)
             {
                 transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
-
-                if (EB.HPNum <= EB.HP.maxValue * 0.8f)
-                {
-                    gameObject.layer = 9;
-                }
             }
 
+            if(SS != null)
+            {
+                if (SS.set == true && insideSpace == true)
+                {
+                    gameObject.layer = 8;
+                    gameObject.tag = "Allies";
+                    EB.destroyButton.gameObject.SetActive(false);
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                }
+            }
         }
         else
         {
             if (Time.timeScale == 0)
             {
-                if (EB.canHack == true)
-                {
-                    EB.frameObj.SetActive(true);
-                    PB.selectObj.Add(gameObject);
-                }
-                else
-                {
-                    EB.frameObj.SetActive(false);
-                }
+                EB.frameObj.SetActive(true);
+                PB.selectObj.Add(gameObject);
             }
             else
             {
@@ -120,6 +102,11 @@ public class testenemy : MonoBehaviour
 
         renderObj = false;
         EB.HP.value = EB.HPNum;
+
+        if (SS != null)
+        {
+            Debug.Log("ok");
+        }
     }
 
     private void OnWillRenderObject()
@@ -160,11 +147,13 @@ public class testenemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.layer == 15)
         {
-            EB.canHack = true;
+            insideSpace = true;
+            SS = collision.gameObject.GetComponent<spaceSet>();
+            Debug.Log("in");
         }
     }
 
@@ -172,7 +161,8 @@ public class testenemy : MonoBehaviour
     {
         if (collision.gameObject.layer == 15)
         {
-            EB.canHack = false;
+            insideSpace = false;
+            Debug.Log("out");
         }
     }
 }

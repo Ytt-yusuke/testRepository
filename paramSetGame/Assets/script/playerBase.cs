@@ -36,7 +36,7 @@ public class playerBase : MonoBehaviour
 
     public Camera cameraObj;
 
-    public List<GameObject> selectObj;
+    public List<GameObject> selectObj = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +47,6 @@ public class playerBase : MonoBehaviour
         cursor.SetActive(false);
         hackCircle.SetActive(false);
         timeStopFlag = false;
-        circleMode = true;
         instSpace.SetActive(false);
     }
 

@@ -10,6 +10,8 @@ public class spaceSet : MonoBehaviour
     private GameObject playerObj;
     private playerBase PB;
 
+    public bool set;
+
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +20,7 @@ public class spaceSet : MonoBehaviour
         IS = GameObject.Find("instSpace").GetComponent<instSpace>();
         playerObj = GameObject.Find("Player");
         PB = playerObj.GetComponent<playerBase>();
+        set = false;
     }
 
     // Update is called once per frame
@@ -27,17 +30,18 @@ public class spaceSet : MonoBehaviour
         {
             var spaceScale = playerObj.transform.position - transform.position;
             SR.size = new Vector2(spaceScale.x, -spaceScale.y);
-            Debug.Log(spaceScale);
         }
 
         if(Input.GetKeyUp(KeyCode.H))
         {
-            IS.count++;
+            set = true;
         }
+    }
 
-        if(IS.count == 2 && PB.hackFlag == false)
+    private void LateUpdate()
+    {
+        if(set == true)
         {
-            IS.count = 0;
             Destroy(gameObject);
         }
     }

@@ -80,13 +80,6 @@ public class playerController : MonoBehaviour
         
         if(PB.hackFlag == true)
         {
-            if(Input.GetKeyDown(KeyCode.B))
-            {
-                Time.timeScale = 0;
-                PB.timeStopFlag = true;
-            }
-            Debug.Log(PB.selectObj.Count);
-
             if (PB.timeStopFlag == true)
             {
                 {
@@ -115,11 +108,13 @@ public class playerController : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.H))
+        if(Input.GetKeyDown(KeyCode.B))
         {
             if (PB.hackFlag == false)
             {
                 PB.hackFlag = true;
+                Time.timeScale = 0;
+                PB.timeStopFlag = true;
                 if (PB.circleMode == true)
                 {
                     PB.hackCircle.SetActive(true);

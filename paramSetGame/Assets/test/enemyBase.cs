@@ -33,6 +33,9 @@ public class enemyBase : MonoBehaviour
 
     public bool renderDestroyFlag;
 
+    private playerBase PB;
+    private bool setflag;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +44,7 @@ public class enemyBase : MonoBehaviour
         playerObj = GameObject.Find("Player");
         frameObj = gameObject.transform.Find("Frame").gameObject;
         frameObj.SetActive(false);
+        PB = playerObj.GetComponent<playerBase>();
     }
 
     // Update is called once per frame
@@ -66,6 +70,7 @@ public class enemyBase : MonoBehaviour
         HP.maxValue = variableHP[(int)size.value];
         HPNum = HP.maxValue * HPratio;
         HP.value = HPNum;
+        setflag = false;
 
         transform.localScale = Vector3.one * sizeNum[(int)size.value];
 
@@ -78,6 +83,25 @@ public class enemyBase : MonoBehaviour
         {
             gameObject.layer = 8;
             gameObject.tag = "Allies";
+
+            for(int i = 0; i < PB.selectObj.Count; i++)
+            {
+                var alliesObj = PB.selectObj[i].gameObject;
+
+                if(alliesObj == gameObject)
+                {
+                    setflag = true;
+                }
+            }
+
+            if(setflag == false)
+            {
+                PB.selectObj.Add(gameObject);
+            }
+
+            var parentObj = GameObject.Find("Allies");
+            gameObject.transform.SetParent(parentObj.transform);
+
             destroyButton.gameObject.SetActive(false);
             gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
         }
@@ -85,6 +109,11 @@ public class enemyBase : MonoBehaviour
         {
             gameObject.layer = 10;
             gameObject.tag = "Object";
+            PB.selectObj.Remove(gameObject);
+
+            var parentObj = GameObject.Find("Object");
+            gameObject.transform.SetParent(parentObj.transform);
+
             destroyButton.gameObject.SetActive(true);
             gameObject.GetComponent<SpriteRenderer>().color = new Color(164, 123, 92, 1);
         }

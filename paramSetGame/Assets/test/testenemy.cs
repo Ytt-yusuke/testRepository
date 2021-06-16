@@ -31,6 +31,7 @@ public class testenemy : MonoBehaviour
 
         if (EB.HPNum <= 0)
         {
+            PB.selectObj.Remove(gameObject);
             Destroy(gameObject);
         }
 
@@ -40,7 +41,8 @@ public class testenemy : MonoBehaviour
             {
                 PB.enemyAlert = false;
             }
-            
+
+            PB.selectObj.Remove(gameObject);
             Destroy(gameObject);
         }
 
@@ -69,13 +71,9 @@ public class testenemy : MonoBehaviour
             {
                 if (SS.set == true && insideSpace == true)
                 {
-                    gameObject.layer = 8;
-                    gameObject.tag = "Allies";
-                    var parentObj = GameObject.Find("Allies");
-                    gameObject.transform.SetParent(parentObj.transform);
-                    PB.selectObj.Add(gameObject);
-                    EB.destroyButton.gameObject.SetActive(false);
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                    EB.enemy.isOn = false;
+                    EB.allies.isOn = true;
+                    EB.SetHP();
                 }
             }
         }
@@ -90,13 +88,16 @@ public class testenemy : MonoBehaviour
                 EB.frameObj.SetActive(false);
             }
 
-            if (PB.enemyAlert == true && PB.alliesTarget != null)
+            if (gameObject.layer == 8)
             {
-                transform.position = Vector2.MoveTowards(transform.position, PB.alliesTarget.transform.position, EB.speedNum * Time.deltaTime);
-            }
-            else
-            {
-                transform.position = Vector2.MoveTowards(transform.position, EB.playerObj.transform.position, EB.speedNum * Time.deltaTime);
+                if (PB.enemyAlert == true && PB.alliesTarget != null)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, PB.alliesTarget.transform.position, EB.speedNum * Time.deltaTime);
+                }
+                else
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, EB.playerObj.transform.position, EB.speedNum * Time.deltaTime);
+                }
             }
         }
 
@@ -116,8 +117,6 @@ public class testenemy : MonoBehaviour
 
     public void DestroyObj()
     {
-        var playerObj = GameObject.Find("Player");
-        var PB = playerObj.GetComponent<playerBase>();
         PB.UIFlag = false;
         PB.cursor.SetActive(false);
         Destroy(gameObject);

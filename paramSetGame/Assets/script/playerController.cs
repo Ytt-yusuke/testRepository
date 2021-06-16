@@ -38,6 +38,7 @@ public class playerController : MonoBehaviour
             damageTimer = 0;
             gameObject.GetComponent<SpriteRenderer>().color = Color.white;
             Physics2D.IgnoreLayerCollision(8, 11, false);
+            Physics2D.IgnoreLayerCollision(8, 16, false);
         }
 
 
@@ -88,15 +89,6 @@ public class playerController : MonoBehaviour
 
             if (PB.timeStopFlag == true)
             {
-                if (PB.selectObj.Count == 1)
-                {
-                    var UI = PB.selectObj[0].transform.Find("UI");
-                    UI.gameObject.SetActive(true);
-                    PB.cursor.SetActive(true);
-                    PB.UIFlag = true;
-                    Time.timeScale = 0;
-                }
-                else
                 {
                     if (Input.GetKeyDown(KeyCode.Space) && PB.controlCount > 0 && PB.timeStopFlag == true)
                     {
@@ -176,6 +168,19 @@ public class playerController : MonoBehaviour
                 damageTimer = 2;
                 gameObject.GetComponent<SpriteRenderer>().color = Color.red;
                 Physics2D.IgnoreLayerCollision(8, 11);
+                Physics2D.IgnoreLayerCollision(8, 16);
+            }
+        }
+        else if(collision.gameObject.CompareTag("BossAtack"))
+        {
+            if (damageTimer == 0)
+            {
+                PB.HPNum--;
+                damageTimer = 2;
+                gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                Physics2D.IgnoreLayerCollision(8, 16);
+                Physics2D.IgnoreLayerCollision(8, 11);
+                Destroy(collision.gameObject);
             }
         }
     }

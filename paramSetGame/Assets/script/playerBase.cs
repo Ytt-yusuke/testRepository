@@ -58,6 +58,15 @@ public class playerBase : MonoBehaviour
         groundDamageTime += Time.deltaTime;
         Debug.Log(selectObj.Count);
 
+        if(selectObj.Count >= 5)
+        {
+            for(int i = 0; i < selectObj.Count - 4; i++)
+            {
+                Destroy(selectObj[0]);
+                selectObj.RemoveAt(0);
+            }
+        }
+
         switch (gravity.value)
         {
             case -2:
@@ -85,10 +94,5 @@ public class playerBase : MonoBehaviour
         {
             instSpace.SetActive(true);
         }
-    }
-
-    private void LateUpdate()
-    {
-        selectObj.Clear();
     }
 }

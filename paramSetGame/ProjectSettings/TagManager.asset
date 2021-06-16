@@ -11,6 +11,9 @@ TagManager:
   - Blaster
   - Allies
   - Space
+  - Door
+  - BossAtack
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -28,7 +31,7 @@ TagManager:
   - Bullet
   - PlayerAssist
   - HackRange
-  - 
+  - EnemyAssist
   - 
   - 
   - 

@@ -18,6 +18,12 @@ public class searchEnemy : MonoBehaviour
     void Update()
     {
         transform.position = playerObj.transform.position;
+
+        if (GameObject.FindGameObjectWithTag("Boss"))
+        {
+            PB.enemyAlert = true;
+            PB.alliesTarget = GameObject.FindGameObjectWithTag("Boss");
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)

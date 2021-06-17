@@ -15,21 +15,7 @@ public class objectSelecter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.timeScale == 0)
-        {
-            if(canSelect == true)
-            {
-                gameObject.layer = 10;
-            }
-            else
-            {
-                gameObject.layer = 12;
-            }
-        }
-        else
-        {
-            gameObject.layer = 12;
-        }
+
     }
 
     private void OnTriggerStay2D(Collider2D collision)

@@ -11,8 +11,8 @@ public class playerBase : MonoBehaviour
     public GameObject cursor;
     public GameObject alliesTarget;
     public GameObject hackTarget;
-    public GameObject hackCircle;
     public GameObject instSpace;
+    public GameObject enemyUI;
 
     public float speedNum;
     public float powerNum;
@@ -30,13 +30,12 @@ public class playerBase : MonoBehaviour
     public bool enemyAlert;
     public bool timeStopFlag;
 
-    public bool circleMode;
-
     public LayerMask GroundLayer;
 
     public Camera cameraObj;
 
     public List<GameObject> selectObj = new List<GameObject>();
+    public List<GameObject> selected = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -45,9 +44,8 @@ public class playerBase : MonoBehaviour
         HPNum = HP.value;
         baseGravity = Physics2D.gravity.y;
         cursor.SetActive(false);
-        hackCircle.SetActive(false);
         timeStopFlag = false;
-        instSpace.SetActive(false);
+        enemyUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -84,15 +82,6 @@ public class playerBase : MonoBehaviour
             case 2:
                 Physics2D.gravity = new Vector2(0, baseGravity * 2);
                 break;
-        }
-
-        if(circleMode == true)
-        {
-            instSpace.SetActive(false);
-        }
-        else
-        {
-            instSpace.SetActive(true);
         }
     }
 }

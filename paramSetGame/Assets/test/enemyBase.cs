@@ -6,12 +6,6 @@ using TMPro;
 
 public class enemyBase : MonoBehaviour
 {
-    public Slider size;
-    public Toggle allies;
-    public Toggle obj;
-    public Toggle enemy;
-    public Button destroyButton;
-    public TextMeshProUGUI sizeText;
     public Slider HP;
 
     public GameObject playerObj;
@@ -29,9 +23,17 @@ public class enemyBase : MonoBehaviour
     public float[] variableHP;
     public float[] speed;
 
+    public float objSpeed;
+
     public int enemyNum;
+    public int sizeValue;
 
     public bool renderDestroyFlag;
+    public bool canSelected;
+    public bool insideSpace;
+    public bool objMove;
+    public bool alliesIsON;
+    public bool objectIsON;
 
     private playerBase PB;
     private bool setflag;
@@ -40,11 +42,12 @@ public class enemyBase : MonoBehaviour
     void Start()
     {
         damageTime = 0;
-        destroyButton.gameObject.SetActive(false);
         playerObj = GameObject.Find("Player");
         frameObj = gameObject.transform.Find("Frame").gameObject;
         frameObj.SetActive(false);
         PB = playerObj.GetComponent<playerBase>();
+        canSelected = false;
+        insideSpace = false;
     }
 
     // Update is called once per frame
@@ -67,19 +70,21 @@ public class enemyBase : MonoBehaviour
     public void SetHP()
     {
         var HPratio = HP.value / HP.maxValue;
-        HP.maxValue = variableHP[(int)size.value];
+        HP.maxValue = variableHP[sizeValue];
         HPNum = HP.maxValue * HPratio;
         HP.value = HPNum;
         setflag = false;
+        frameObj.SetActive(false);
+        canSelected = false;
 
-        transform.localScale = Vector3.one * sizeNum[(int)size.value];
+        transform.localScale = Vector3.one * sizeNum[sizeValue];
 
         if (gameObject.layer != 11 && gameObject.layer != 9)
         {
-            speedNum = speed[(int)size.value];
+            speedNum = speed[sizeValue];
         }
 
-        if (allies.isOn == true)
+        if (alliesIsON == true)
         {
             gameObject.layer = 8;
             gameObject.tag = "Allies";
@@ -101,11 +106,9 @@ public class enemyBase : MonoBehaviour
 
             var parentObj = GameObject.Find("Allies");
             gameObject.transform.SetParent(parentObj.transform);
-
-            destroyButton.gameObject.SetActive(false);
             gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
         }
-        else if (obj.isOn == true)
+        else if (objectIsON == true)
         {
             gameObject.layer = 10;
             gameObject.tag = "Object";
@@ -114,15 +117,7 @@ public class enemyBase : MonoBehaviour
             var parentObj = GameObject.Find("Object");
             gameObject.transform.SetParent(parentObj.transform);
 
-            destroyButton.gameObject.SetActive(true);
             gameObject.GetComponent<SpriteRenderer>().color = new Color(164, 123, 92, 1);
-        }
-
-        if(enemy.isOn == false)
-        {
-            enemy.gameObject.SetActive(false);
-            var objToggle = obj.navigation;
-            objToggle.selectOnRight = null;
         }
     }
 }

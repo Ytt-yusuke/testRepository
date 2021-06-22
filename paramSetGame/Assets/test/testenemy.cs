@@ -9,7 +9,6 @@ public class testenemy : MonoBehaviour
 
     private bool renderObj;
     private bool firstRenderObj;
-    private bool insideSpace;
 
     private spaceSet SS;
 
@@ -21,7 +20,6 @@ public class testenemy : MonoBehaviour
         EB = GetComponent<enemyBase>();
         PB = EB.playerObj.GetComponent<playerBase>();
         EB.EnemySet(EB.enemyNum);
-        insideSpace = false;
     }
 
     // Update is called once per frame
@@ -32,6 +30,7 @@ public class testenemy : MonoBehaviour
         if (EB.HPNum <= 0)
         {
             PB.selectObj.Remove(gameObject);
+            PB.selected.Remove(gameObject);
             Destroy(gameObject);
         }
 
@@ -46,6 +45,11 @@ public class testenemy : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if(PB.hackFlag == false)
+        {
+            EB.frameObj.SetActive(false);
+        }
+
         if (gameObject.layer == 11)
         {
             if (renderObj == false && firstRenderObj == true && EB.renderDestroyFlag == true)
@@ -58,37 +62,32 @@ public class testenemy : MonoBehaviour
                 Destroy(gameObject);
             }
 
-            if (EB.enemyNum == 0)
+            if (EB.canSelected == false)
             {
-                transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
-            }
-            else if (EB.enemyNum == 1)
-            {
-                transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
+                if (EB.enemyNum == 0)
+                {
+                    transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
+                }
+                else if (EB.enemyNum == 1)
+                {
+                    transform.Translate(Vector2.left * EB.speedNum * Time.deltaTime);
+                }
             }
 
             if(SS != null)
             {
-                if (SS.set == true && insideSpace == true)
+                if (SS.set == true && EB.insideSpace == true)
                 {
-                    EB.enemy.isOn = false;
-                    EB.allies.isOn = true;
-                    EB.SetHP();
+                    EB.canSelected = true;
+                    EB.frameObj.SetActive(true);
+                    PB.selected.Add(gameObject);
+                    gameObject.layer = 17;
                 }
             }
         }
         else
         {
-            if (Time.timeScale == 0)
-            {
-                EB.frameObj.SetActive(true);
-            }
-            else
-            {
-                EB.frameObj.SetActive(false);
-            }
-
-            if (gameObject.layer == 8)
+            if (gameObject.layer == 8 && EB.canSelected == false)
             {
                 if (PB.enemyAlert == true && PB.alliesTarget != null)
                 {
@@ -97,6 +96,25 @@ public class testenemy : MonoBehaviour
                 else
                 {
                     transform.position = Vector2.MoveTowards(transform.position, EB.playerObj.transform.position, EB.speedNum * Time.deltaTime);
+                }
+            }
+
+            if(gameObject.layer == 10)
+            {
+                if(EB.objMove== true)
+                {
+                    transform.Translate(Vector2.right * EB.objSpeed * Time.deltaTime);
+                }
+            }
+
+            if (SS != null)
+            {
+                if (SS.set == true && EB.insideSpace == true)
+                {
+                    EB.canSelected = true;
+                    EB.frameObj.SetActive(true);
+                    PB.selected.Add(gameObject);
+                    gameObject.layer = 17;
                 }
             }
         }
@@ -129,6 +147,11 @@ public class testenemy : MonoBehaviour
             EB.HPNum--;
             Destroy(collision.gameObject);
         }
+
+        if(collision.gameObject == EB.playerObj && gameObject.layer == 10)
+        {
+            EB.objSpeed *= -1;
+        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -150,23 +173,14 @@ public class testenemy : MonoBehaviour
             }
         }
 
-        Debug.Log(collision.gameObject.name + "STAY");
+        //Debug.Log(collision.gameObject.name + "STAY");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.layer == 15)
         {
-            insideSpace = true;
             SS = collision.gameObject.GetComponent<spaceSet>();
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == 15)
-        {
-            insideSpace = false;
         }
     }
 

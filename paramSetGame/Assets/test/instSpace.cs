@@ -7,14 +7,11 @@ public class instSpace : MonoBehaviour
     [SerializeField]
     GameObject space;
 
-    public int count;
-
     private GameObject playerObj;
 
     // Start is called before the first frame update
     void Start()
     {
-        count = 0;
         playerObj = GameObject.Find("Player");
     }
 

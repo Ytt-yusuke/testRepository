@@ -42,6 +42,7 @@ public class playerController : MonoBehaviour
         }
 
 
+        if(PB.hackFlag == false)
         { 
             if (Input.GetKey(KeyCode.RightArrow))
             {
@@ -80,57 +81,54 @@ public class playerController : MonoBehaviour
         
         if(PB.hackFlag == true)
         {
-            if (PB.timeStopFlag == true)
+            //if (Input.GetKeyDown(KeyCode.Space) && PB.controlCount > 0 && PB.selected.Count > 0)
+            //{
+            //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //    int layerMask = 1 << 8 | 1 << 9 | 1 << 10;
+            //    RaycastHit2D hit = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity, layerMask);
+
+            //    if (hit.collider && PB.UIFlag == false)
+            //    {
+            //        var hitObj = hit.collider.gameObject;
+
+            //        if (hitObj.layer == 8 || hitObj.layer == 9 || hitObj.layer == 10)
+            //        {
+            //            var UI = hitObj.transform.Find("UI");
+            //            UI.gameObject.SetActive(true);
+            //            PB.cursor.SetActive(true);
+            //            PB.UIFlag = true;
+            //        }
+
+            //    }
+            //}
+
+            PB.enemyUI.SetActive(true);
+
+            if (PB.selected.Count == 0)
             {
-                {
-                    if (Input.GetKeyDown(KeyCode.Space) && PB.controlCount > 0 && PB.timeStopFlag == true)
-                    {
-                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                        int layerMask = 1 << 8 | 1 << 9 | 1 << 10;
-                        RaycastHit2D hit = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, Mathf.Infinity, layerMask);
-
-                        if (hit.collider && PB.UIFlag == false)
-                        {
-                            var hitObj = hit.collider.gameObject;
-
-                            if (hitObj.layer == 8 || hitObj.layer == 9 || hitObj.layer == 10)
-                            {
-                                var UI = hitObj.transform.Find("UI");
-                                UI.gameObject.SetActive(true);
-                                PB.cursor.SetActive(true);
-                                PB.UIFlag = true;
-                                Time.timeScale = 0;
-                            }
-
-                        }
-                    }
-                }
+                PB.hackFlag = false;
+                PB.enemyUI.SetActive(false);
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.B))
-        {
-            if (PB.hackFlag == false)
-            {
-                PB.hackFlag = true;
-                Time.timeScale = 0;
-                PB.timeStopFlag = true;
-                if (PB.circleMode == true)
-                {
-                    PB.hackCircle.SetActive(true);
-                }
-            }
-            else
-            {
-                if(PB.UIFlag == false)
-                {
-                    PB.hackFlag = false;
-                    PB.hackCircle.SetActive(false);
-                    PB.timeStopFlag = false;
-                    Time.timeScale = 1;
-                }
-            }
-        }
+        //if(Input.GetKeyDown(KeyCode.B))
+        //{
+        //    if (PB.hackFlag == false)
+        //    {
+        //        PB.hackFlag = true;
+        //        Time.timeScale = 0;
+        //        PB.timeStopFlag = true;
+        //    }
+        //    else
+        //    {
+        //        if(PB.UIFlag == false)
+        //        {
+        //            PB.hackFlag = false;
+        //            PB.timeStopFlag = false;
+        //            Time.timeScale = 1;
+        //        }
+        //    }
+        //}
 
         if(Input.GetKeyDown(KeyCode.I))
         {

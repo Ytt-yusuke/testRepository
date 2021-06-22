@@ -25,8 +25,9 @@ public class UIset : MonoBehaviour
         PB.UIFlag = false;
         PB.controlCount--;
         PB.hackFlag = false;
-        PB.hackCircle.SetActive(false);
         Time.timeScale = 1;
         PB.timeStopFlag = false;
+        PB.selected.Clear();
+        PB.enemyUI.SetActive(false);
     }
 }

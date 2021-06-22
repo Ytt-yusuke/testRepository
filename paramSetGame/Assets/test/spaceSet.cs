@@ -42,6 +42,7 @@ public class spaceSet : MonoBehaviour
     {
         if(set == true)
         {
+            PB.hackFlag = true;
             Destroy(gameObject);
         }
     }

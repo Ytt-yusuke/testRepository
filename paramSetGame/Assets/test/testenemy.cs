@@ -87,7 +87,7 @@ public class testenemy : MonoBehaviour
         }
         else
         {
-            if (gameObject.layer == 8 && EB.canSelected == false)
+            if (gameObject.layer == 9 && EB.canSelected == false)
             {
                 if (PB.enemyAlert == true && PB.alliesTarget != null)
                 {
@@ -142,7 +142,7 @@ public class testenemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 16 && gameObject.layer == 8)
+        if(collision.gameObject.layer == 16 && gameObject.layer == 9)
         {
             EB.HPNum--;
             Destroy(collision.gameObject);
@@ -150,7 +150,20 @@ public class testenemy : MonoBehaviour
 
         if(collision.gameObject == EB.playerObj && gameObject.layer == 10)
         {
-            EB.objSpeed *= -1;
+            if(EB.objSpeed > 0)
+            {
+                if(EB.playerObj.transform.position.x >= transform.position.x + (EB.SR.bounds.size.x / 4))
+                {
+                    EB.objSpeed *= -1;
+                }
+            }
+            else
+            {
+                if(EB.playerObj.transform.position.x <= transform.position.x  - (EB.SR.bounds.size.x / 4))
+                {
+                    EB.objSpeed *= -1;
+                }
+            }
         }
     }
 
@@ -158,14 +171,14 @@ public class testenemy : MonoBehaviour
     {
         if (atackTime >= EB.atackLimited)
         {
-            if (collision.gameObject.layer == 11 && gameObject.layer == 8)
+            if (collision.gameObject.layer == 11 && gameObject.layer == 9)
             {
                 collision.gameObject.GetComponent<enemyBase>().HPNum--;
                 EB.HPNum--;
                 atackTime = 0;
             }
             
-            if (collision.gameObject.layer == 9 && gameObject.layer == 8)
+            if (collision.gameObject.layer == 9 && gameObject.layer == 9)
             {
                 collision.gameObject.GetComponent<enemyBase>().HPNum--;
                 EB.HPNum--;
@@ -188,7 +201,7 @@ public class testenemy : MonoBehaviour
     {
         if (atackTime >= EB.atackLimited)
         {
-            if (collision.gameObject.CompareTag("Boss") && gameObject.layer == 8)
+            if (collision.gameObject.CompareTag("Boss") && gameObject.layer == 9)
             {
                 EB.HPNum--;
                 var BB = collision.gameObject.GetComponent<bossBase>();

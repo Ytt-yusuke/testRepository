@@ -16,6 +16,7 @@ public class enemyUISet : MonoBehaviour
     public Toggle canMove;
     public Slider size;
     public Button destroyButton;
+    public Button setButton;
     public TextMeshProUGUI sizeText;
 
     // Start is called before the first frame update
@@ -38,11 +39,23 @@ public class enemyUISet : MonoBehaviour
         {
             canMove.gameObject.SetActive(true);
             destroyButton.gameObject.SetActive(true);
+            var moveNav = obj.navigation;
+            moveNav.selectOnRight = canMove;
+            var destroyNav = destroyButton.navigation;
+            destroyNav.selectOnRight = setButton;
+            var setNav = setButton.navigation;
+            setNav.selectOnLeft = destroyButton;
         }
         else
         {
             canMove.gameObject.SetActive(false);
             destroyButton.gameObject.SetActive(false);
+            var moveNav = obj.navigation;
+            moveNav.selectOnRight = null;
+            var destroyNav = destroyButton.navigation;
+            destroyNav.selectOnRight = null;
+            var setNav = setButton.navigation;
+            setNav.selectOnLeft = null;
         }
     }
 
@@ -77,6 +90,12 @@ public class enemyUISet : MonoBehaviour
                 size.value = EB.sizeValue;
                 allies.isOn = EB.alliesIsON;
                 obj.isOn = EB.objectIsON;
+
+                if(allies.isOn == false && obj.isOn == false)
+                {
+                    allies.isOn = true;
+                }
+
                 canMove.isOn = EB.objMove;
             }
             else if (PB.selected.Count >= 2)

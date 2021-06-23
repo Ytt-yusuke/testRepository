@@ -8,17 +8,19 @@ public class instSpace : MonoBehaviour
     GameObject space;
 
     private GameObject playerObj;
+    private playerBase PB;
 
     // Start is called before the first frame update
     void Start()
     {
         playerObj = GameObject.Find("Player");
+        PB = playerObj.GetComponent<playerBase>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!GameObject.Find("Space"))
+        if (!GameObject.Find("Space") && PB.hackFlag == false)
         {
             if (Input.GetKeyDown(KeyCode.H))
             {

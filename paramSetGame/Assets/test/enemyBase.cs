@@ -36,6 +36,8 @@ public class enemyBase : MonoBehaviour
     public bool objectIsON;
 
     private playerBase PB;
+    public SpriteRenderer playerSR;
+    public SpriteRenderer SR;
     private bool setflag;
 
     // Start is called before the first frame update
@@ -48,6 +50,8 @@ public class enemyBase : MonoBehaviour
         PB = playerObj.GetComponent<playerBase>();
         canSelected = false;
         insideSpace = false;
+        playerSR = playerObj.GetComponent<SpriteRenderer>();
+        SR = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -86,7 +90,7 @@ public class enemyBase : MonoBehaviour
 
         if (alliesIsON == true)
         {
-            gameObject.layer = 8;
+            gameObject.layer = 9;
             gameObject.tag = "Allies";
 
             for(int i = 0; i < PB.selectObj.Count; i++)

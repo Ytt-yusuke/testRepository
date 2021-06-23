@@ -45,6 +45,15 @@ public class enemyUIPos : MonoBehaviour
                     pos.x = maincamera.ScreenToWorldPoint(new Vector3(148f + center.x, 0, 0)).x;
                 }
 
+                if (maincamera.WorldToScreenPoint(pos).y - center.y <= -86.5)
+                {
+                    pos.y = maincamera.ScreenToWorldPoint(new Vector3(0, -86.5f + center.y, 0)).y;
+                }
+                else if (maincamera.WorldToScreenPoint(pos).y - center.y >= 30)
+                {
+                    pos.y = maincamera.ScreenToWorldPoint(new Vector3(0, 30f + center.y, 0)).y;
+                }
+
                 transform.position = pos;
             }
             else if(PB.selected.Count > 1)
@@ -71,6 +80,15 @@ public class enemyUIPos : MonoBehaviour
                 else if (maincamera.WorldToScreenPoint(pos).x - center.x >= 148f)
                 {
                     pos.x = maincamera.ScreenToWorldPoint(new Vector3(148f + center.x, 0, 0)).x;
+                }
+
+                if (maincamera.WorldToScreenPoint(pos).y - center.y <= -86.5)
+                {
+                    pos.y = maincamera.ScreenToWorldPoint(new Vector3(0, -86.5f + center.y, 0)).y;
+                }
+                else if (maincamera.WorldToScreenPoint(pos).y - center.y >= 30)
+                {
+                    pos.y = maincamera.ScreenToWorldPoint(new Vector3(0, 30 + center.y, 0)).y;
                 }
 
                 transform.position = pos;

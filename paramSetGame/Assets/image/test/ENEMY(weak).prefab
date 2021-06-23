@@ -211,10 +211,10 @@ GameObject:
   - component: {fileID: 2884250640382284932}
   - component: {fileID: 598673821250131116}
   - component: {fileID: 4340416699482516234}
-  - component: {fileID: 5007669544875469004}
   - component: {fileID: 7818741329921820973}
   - component: {fileID: 6220379516684785775}
   - component: {fileID: 3277023987632994324}
+  - component: {fileID: 4174914439606604677}
   m_Layer: 11
   m_Name: ENEMY(weak)
   m_TagString: Enemy
@@ -342,8 +342,6 @@ MonoBehaviour:
   HP: {fileID: 2943843534032159997}
   playerObj: {fileID: 0}
   frameObj: {fileID: 0}
-  enemySystem: {fileID: 0}
-  enemyUI: {fileID: 0}
   damageTime: 0
   HPNum: 5
   speedNum: 1
@@ -375,22 +373,7 @@ MonoBehaviour:
   objMove: 0
   alliesIsON: 0
   objectIsON: 0
---- !u!58 &5007669544875469004
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5659517816880009457}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.74
+  playerSR: {fileID: 0}
 --- !u!58 &7818741329921820973
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -432,6 +415,32 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.48, y: 1.48}
+    newSize: {x: 1.48, y: 1.48}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.48, y: 1.48}
+  m_EdgeRadius: 0
+--- !u!61 &4174914439606604677
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5659517816880009457}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

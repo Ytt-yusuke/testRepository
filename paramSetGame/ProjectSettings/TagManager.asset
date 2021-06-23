@@ -24,7 +24,7 @@ TagManager:
   - 
   - 
   - SelectPlayer
-  - SelectEnemy
+  - Allies
   - SelectObject
   - UnselectEnemy
   - UnselectObject

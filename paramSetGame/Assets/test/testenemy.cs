@@ -150,18 +150,22 @@ public class testenemy : MonoBehaviour
 
         if(collision.gameObject == EB.playerObj && gameObject.layer == 10)
         {
-            if(EB.objSpeed > 0)
+            if (EB.playerObj.transform.position.y <= transform.position.y + (EB.SR.bounds.size.y / 4) &&
+               EB.playerObj.transform.position.y > transform.position.y - (EB.SR.bounds.size.y / 4))
             {
-                if(EB.playerObj.transform.position.x >= transform.position.x + (EB.SR.bounds.size.x / 4))
+                if (EB.objSpeed > 0)
                 {
-                    EB.objSpeed *= -1;
+                    if (EB.playerObj.transform.position.x >= transform.position.x + (EB.SR.bounds.size.x / 4))
+                    {
+                        EB.objSpeed *= -1;
+                    }
                 }
-            }
-            else
-            {
-                if(EB.playerObj.transform.position.x <= transform.position.x  - (EB.SR.bounds.size.x / 4))
+                else
                 {
-                    EB.objSpeed *= -1;
+                    if (EB.playerObj.transform.position.x <= transform.position.x - (EB.SR.bounds.size.x / 4))
+                    {
+                        EB.objSpeed *= -1;
+                    }
                 }
             }
         }

@@ -86,6 +86,7 @@ public class enemyBase : MonoBehaviour
         if (gameObject.layer != 11 && gameObject.layer != 9)
         {
             speedNum = speed[sizeValue];
+            objSpeed = speed[sizeValue];
         }
 
         if (alliesIsON == true)

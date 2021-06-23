@@ -10,6 +10,7 @@ public class playerController : MonoBehaviour
     private RaycastHit hit;
 
     private bool onGround;
+    private bool onObj;
     private bool jumpFlag;
 
     private float damageTimer = 0;
@@ -28,6 +29,7 @@ public class playerController : MonoBehaviour
     {
         moveDist = Vector2.zero;
         onGround = IsCollision();
+        onObj = OnMoveObj();
 
         if (damageTimer > 0)
         {
@@ -40,7 +42,6 @@ public class playerController : MonoBehaviour
             Physics2D.IgnoreLayerCollision(8, 11, false);
             Physics2D.IgnoreLayerCollision(8, 16, false);
         }
-
 
         if(PB.hackFlag == false)
         { 
@@ -151,6 +152,17 @@ public class playerController : MonoBehaviour
                || Physics2D.Linecast(right_SP, EP, PB.GroundLayer);
     }
 
+    bool OnMoveObj()
+    {
+        Vector3 left_SP = transform.position - Vector3.right * 0.2f;
+        Vector3 right_SP = transform.position + Vector3.right * 0.2f;
+        Vector3 EP = transform.position - Vector3.up * 0.1f;
+        //Debug.DrawLine(left_SP, EP);
+        //Debug.DrawLine(right_SP, EP);
+        return Physics2D.Linecast(left_SP, EP, PB.MoveObjLayer)
+               || Physics2D.Linecast(right_SP, EP, PB.MoveObjLayer);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("Enemy") && collision.gameObject.GetComponent<enemyBase>().HPNum > 0)
@@ -175,6 +187,15 @@ public class playerController : MonoBehaviour
                 Physics2D.IgnoreLayerCollision(8, 11);
                 Destroy(collision.gameObject);
             }
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if(onObj == true && collision.gameObject.layer == 10)
+        {
+            var EB = collision.gameObject.GetComponent<enemyBase>();
+            transform.Translate(EB.objSpeed * Vector2.right * Time.deltaTime);
         }
     }
 }

@@ -31,6 +31,7 @@ public class playerBase : MonoBehaviour
     public bool timeStopFlag;
 
     public LayerMask GroundLayer;
+    public LayerMask MoveObjLayer;
 
     public Camera cameraObj;
 
